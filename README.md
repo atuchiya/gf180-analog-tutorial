@@ -1,2 +1,3 @@
-# gf180-analog-tutorial
+# CMOS Analog Circuits in GF180MCU
+
 Tutorial of CMOS Analog Circuits in GF180MCU
