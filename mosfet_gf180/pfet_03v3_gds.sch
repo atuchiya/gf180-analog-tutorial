@@ -39,12 +39,6 @@ N 110 -440 410 -440 {lab=#net2}
 N 50 -440 50 -300 {lab=#net2}
 N 50 -440 110 -440 {lab=#net2}
 C {devices/title.sym} 160 -30 0 0 {name=l1 author="Akira Tsuchiya"}
-C {devices/code_shown.sym} 10 -150 0 0 {name=MODELS only_toplevel=true
-format="tcleval( @value )"
-value="
-.include /foss/pdks/gf180mcuD/libs.tech/ngspice/design.ngspice
-.lib /foss/pdks/gf180mcuD/libs.tech/ngspice/sm141064.ngspice typical
-"}
 C {devices/code_shown.sym} 20 -790 0 0 {name=NGSPICE only_toplevel=true
 value="
 .option savecurrent
@@ -97,3 +91,9 @@ model=pfet_03v3
 spiceprefix=X
 }
 C {devices/vsource.sym} 50 -270 2 0 {name=VDD value=3.3 savecurrent=false}
+C {devices/code_shown.sym} 10 -140 0 0 {name=MODELS only_toplevel=true
+format="tcleval( @value )"
+value="
+.include $::180MCU_MODELS/design.ngspice
+.lib $::180MCU_MODELS/sm141064.ngspice typical
+"}

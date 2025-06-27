@@ -39,12 +39,6 @@ N 50 -260 50 -240 {lab=GND}
 N 190 -240 320 -240 {lab=GND}
 N 50 -240 190 -240 {lab=GND}
 C {devices/title.sym} 160 -30 0 0 {name=l1 author="Akira Tsuchiya"}
-C {devices/code_shown.sym} 10 -150 0 0 {name=MODELS only_toplevel=true
-format="tcleval( @value )"
-value="
-.include /foss/pdks/gf180mcuD/libs.tech/ngspice/design.ngspice
-.lib /foss/pdks/gf180mcuD/libs.tech/ngspice/sm141064.ngspice typical
-"}
 C {symbols/nfet_03v3.sym} 170 -340 0 0 {name=M1
 L=0.28u
 W=0.22u
@@ -96,3 +90,9 @@ tclcommand="
 xschem raw_read $netlist_dir/[file tail [file rootname [xschem get current_name]]]_idvds.raw
 "
 }
+C {devices/code_shown.sym} 10 -140 0 0 {name=MODELS only_toplevel=true
+format="tcleval( @value )"
+value="
+.include $::180MCU_MODELS/design.ngspice
+.lib $::180MCU_MODELS/sm141064.ngspice typical
+"}
