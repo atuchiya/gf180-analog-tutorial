@@ -4,41 +4,6 @@ K {}
 V {}
 S {}
 E {}
-B 2 490 -650 1080 -190 {flags=graph
-y1=8.7e-09
-y2=3.3
-ypos1=0
-ypos2=2
-divy=5
-subdivy=1
-unity=1
-x1=0
-x2=3.3
-divx=5
-subdivx=1
-node=V(out)
-color=4
-
-unitx=1
-dataset=-1}
-B 2 1100 -650 1690 -190 {flags=graph
-y1=3.4e-12
-y2=8.8e-05
-ypos1=0
-ypos2=2
-divy=5
-subdivy=1
-unity=m
-x1=0
-x2=3.3
-divx=5
-subdivx=1
-node=i(vid)
-color=4
-
-unitx=1
-dataset=-1}
-T {Select by Ctrl+left-click} 490 -740 0 0 0.4 0.4 {layer=1}
 N 150 -240 150 -220 {lab=GND}
 N 150 -260 150 -240 {lab=GND}
 N 150 -240 290 -240 {lab=GND}
@@ -53,14 +18,17 @@ N 290 -280 310 -280 {lab=GND}
 N 50 -240 50 -220 {lab=GND}
 N 50 -260 50 -240 {lab=GND}
 N 50 -360 50 -320 {lab=VDD}
-N 220 -450 250 -450 {lab=#net2}
+N 220 -450 250 -450 {lab=in}
 N 290 -300 290 -240 {lab=GND}
 N 290 -420 290 -360 {lab=out}
 N 290 -390 400 -390 {lab=out}
-N 220 -450 220 -330 {lab=#net2}
-N 220 -330 250 -330 {lab=#net2}
-N 150 -390 220 -390 {lab=#net2}
-N 150 -390 150 -320 {lab=#net2}
+N 220 -450 220 -330 {lab=in}
+N 220 -330 250 -330 {lab=in}
+N 150 -390 220 -390 {lab=in}
+N 150 -390 150 -320 {lab=in}
+N 400 -390 400 -340 {lab=out}
+N 400 -280 400 -240 {lab=GND}
+N 290 -240 400 -240 {lab=GND}
 C {devices/title.sym} 160 -30 0 0 {name=l1 author="Akira Tsuchiya"}
 C {symbols/nfet_03v3.sym} 270 -330 0 0 {name=M1
 L=0.28u
@@ -77,27 +45,22 @@ model=nfet_03v3
 spiceprefix=X
 }
 C {devices/gnd.sym} 150 -220 0 0 {name=l2 lab=GND}
-C {devices/vsource.sym} 150 -290 0 0 {name=VIN value=0 savecurrent=false}
+C {devices/vsource.sym} 150 -290 0 0 {name=VIN value="pwl 0 0 100n 0 120n 3.3 200n 3.3 220n 0" savecurrent=false}
 C {devices/lab_pin.sym} 400 -390 2 0 {name=p2 sig_type=std_logic lab=out}
 C {devices/ammeter.sym} 290 -530 0 0 {name=Vid savecurrent=true spice_ignore=0}
-C {devices/code_shown.sym} 10 -710 0 0 {name=NGSPICE only_toplevel=true
+C {devices/code_shown.sym} 10 -750 0 0 {name=NGSPICE only_toplevel=true
 format="tcleval( @value )"
 value="
 .option savecurrent
 .control
 save all
 
-* I-O
-dc VIN 0 3.3 0.01
-write 01_inv_dc.raw
+* waveform
+tran 1n 300n
+plot V(in) V(out)
+plot i(Vid)
 .endc
 "}
-C {devices/launcher.sym} 555 -685 0 0 {name=h1
-descr="I-O curve"
-tclcommand="
-xschem raw_read $netlist_dir/[file tail [file rootname [xschem get current_name]]].raw
-"
-}
 C {devices/code_shown.sym} 10 -140 0 0 {name=MODELS only_toplevel=true
 format="tcleval( @value )"
 value="
@@ -122,8 +85,17 @@ C {vdd.sym} 290 -580 0 0 {name=l3 lab=VDD}
 C {devices/vsource.sym} 50 -290 0 0 {name=VDD value=3.3 savecurrent=false}
 C {devices/gnd.sym} 50 -220 0 0 {name=l4 lab=GND}
 C {vdd.sym} 50 -360 0 0 {name=l5 lab=VDD}
-C {devices/code_shown.sym} 10 -800 0 0 {name=MEASURE only_toplevel=true
+C {capa.sym} 400 -310 0 0 {name=C1
+m=1
+value=100f
+footprint=1206
+device="ceramic capacitor"}
+C {devices/lab_pin.sym} 150 -390 2 1 {name=p1 sig_type=std_logic lab=in}
+C {devices/code_shown.sym} 270 -750 0 0 {name=MEASURE only_toplevel=true
 format="tcleval( @value )"
 value="
-.measure dc vlt when v(out)=1.65
+.measure tran tdr trig V(in) val=1.65 rise=1 targ V(out) val=1.65 fall=1
+.measure tran tdf trig V(in) val=1.65 fall=1 targ V(out) val=1.65 rise=1
+.measure tran tr trig V(out) val=0.66 rise=1 targ V(out) val=2.64 rise=1
+.measure tran tf trig V(out) val=2.64 fall=1 targ V(out) val=0.66 fall=1
 "}
