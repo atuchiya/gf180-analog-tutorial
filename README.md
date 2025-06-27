@@ -21,4 +21,4 @@ to
 
 ## Contents
 1. Learning MOSFET characteristics [[Jupyter-nodebook](https://github.com/atuchiya/gf180-analog-tutorial/blob/main/mosfet_gf180.ipynb)] | [[Xschem](https://github.com/atuchiya/gf180-analog-tutorial/tree/main/mosfet_gf180)]
-2. Fifty-Nifty Variations of Two-Transistor Circuits [[Jupyter-notebook](https://github.com/atuchiya/gf180-analog-tutorial/blob/main/fifty_nifty.ipynb)] | [[Xschem](https://github.com/atuchiya/gf180-analog-tutorial/tree/main/fifty-nifty)]
+2. Fifty-Nifty Variations of Two-Transistor Circuits [[Jupyter-notebook](https://github.com/atuchiya/gf180-analog-tutorial/blob/main/fifty_nifty.ipynb)] | [[Xschem](https://github.com/atuchiya/gf180-analog-tutorial/tree/main/fifty_nifty)]
