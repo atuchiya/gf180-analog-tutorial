@@ -1,1 +1,1 @@
-Fifty-Nifty
+Xschem schematic files for fifty_nifty.ipynb
